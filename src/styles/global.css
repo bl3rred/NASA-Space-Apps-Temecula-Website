@@ -1,0 +1,151 @@
+:root {
+  /* ── Color tokens (extracted from the Figma frame) ── */
+  --space-deep: #07173f;
+  --space-mid: #0b4c87;
+  --space-light: #146fb8;
+  --sky-pale: #b8e8f6;
+  --sky-light: #79d2ef;
+  --grass-light: #72bc63;
+  --grass-dark: #3e8659;
+  --soil-top: #754a32;
+  --soil-mid: #513225;
+  --soil-deep: #34251f;
+  --ocean-shallow: #0867a8;
+  --ocean-mid: #0b4c87;
+  --ocean-deep: #07173f;
+  --about-box: #c4621a;
+  --about-box-border: #1a1208;
+  --ink: #07173f;
+  --paper: #fdf6e9;
+  --star: #f5c542;
+
+  /* ── Typography ── */
+  --font-display: "Koulen", system-ui, sans-serif;
+  --font-body: "Margarine", "Margarine Fallback", system-ui, sans-serif;
+  --font-ui: "Space Grotesk", system-ui, sans-serif;
+  --font-ui-alt: "Source Sans 3", system-ui, sans-serif;
+
+  /* ── Layout ── */
+  --canvas-width: 1440px;
+  --nav-height: 88px;
+
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--space-deep);
+}
+
+#root {
+  width: 100%;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.page-slice {
+  max-width: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--star);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.page {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Utility: pixel-positioned decorative asset wrapper. Keeps the outer box
+   and inner leaf dimensions explicit so assets never get stretched. */
+.asset {
+  position: absolute;
+  pointer-events: none;
+  overflow: hidden;
+}
+.asset > img {
+  position: absolute;
+  max-width: none;
+}
+
+/* Reusable star field — many small stars scattered across the hero. */
+.star {
+  position: absolute;
+  width: 44px;
+  height: 62px;
+  pointer-events: none;
+  overflow: hidden;
+}
+.star > img {
+  position: absolute;
+  width: 815.75%;
+  height: 581.41%;
+  top: 0;
+  left: -179.94%;
+  max-width: none;
+}
+
+/* Reusable bush/flower sprite used across multiple sections. */
+.bush {
+  position: absolute;
+  pointer-events: none;
+  overflow: hidden;
+}
+.bush > img {
+  position: absolute;
+  max-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Desktop 1:1 pass: canvas stays fixed at 1440px, centered via App layout. */
