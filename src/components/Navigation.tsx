@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { nav } from "../data/content";
 import { FRAME_WIDTH } from "../layout/frame";
+import { handleNavClick } from "../scroll/smoothScroll";
+import type { SectionId } from "../scroll/scrollCoords";
 
 /** Cover only the link row so stars on the left stay visible. */
 const NAV_COVER_LEFT = 800;
-const NAV_HITS: Array<{ href: string; left: number; width: number }> = [
-  { href: "#about", left: 823, width: 56 },
-  { href: "#tracks", left: 918, width: 62 },
-  { href: "#schedule", left: 1019, width: 82 },
-  { href: "#sponsors", left: 1140, width: 86 },
-  { href: "#faq", left: 1265, width: 38 },
+const NAV_HITS: Array<{ href: string; left: number; width: number; section: SectionId }> = [
+  { href: "#about", left: 823, width: 56, section: "about" },
+  { href: "#tracks", left: 918, width: 62, section: "tracks" },
+  { href: "#schedule", left: 1019, width: 82, section: "schedule" },
+  { href: "#sponsors", left: 1140, width: 86, section: "sponsors" },
+  { href: "#faq", left: 1265, width: 38, section: "faq" },
 ];
 
+type CanvasNavHitsProps = {
+  activeSection: SectionId;
+  layoutScale: number;
+};
+
 /** Desktop HTML labels over the illustrated nav. Hidden on mobile. */
-export function CanvasNavHits() {
+export function CanvasNavHits({ activeSection, layoutScale }: CanvasNavHitsProps) {
   return (
     <nav
       aria-label="Primary"
@@ -37,10 +44,13 @@ export function CanvasNavHits() {
       />
       {NAV_HITS.map((hit) => {
         const link = nav.links.find((l) => l.href === hit.href);
+        const isActive = activeSection === hit.section;
         return (
           <a
             key={hit.href}
             href={hit.href}
+            aria-current={isActive ? "page" : undefined}
+            onClick={(e) => handleNavClick(e, hit.href, layoutScale)}
             style={{
               position: "absolute",
               left: hit.left - NAV_COVER_LEFT,
@@ -50,14 +60,15 @@ export function CanvasNavHits() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#ffffff",
+              color: isActive ? "#f5c542" : "#ffffff",
               fontFamily: "var(--font-ui)",
-              fontWeight: 500,
+              fontWeight: isActive ? 700 : 500,
               fontSize: 16,
               letterSpacing: "0.04em",
               whiteSpace: "nowrap",
               pointerEvents: "auto",
               zIndex: 1,
+              transition: "color 0.25s ease, font-weight 0.25s ease",
             }}
           >
             {link?.label ?? hit.href.slice(1)}
@@ -70,10 +81,12 @@ export function CanvasNavHits() {
 
 type MobileNavProps = {
   visible: boolean;
+  activeSection: SectionId;
+  layoutScale: number;
 };
 
 /** Floating hamburger — no full-width header bar. */
-export function MobileNav({ visible }: MobileNavProps) {
+export function MobileNav({ visible, activeSection, layoutScale }: MobileNavProps) {
   const [open, setOpen] = useState(false);
 
   if (!visible) return null;
@@ -123,22 +136,30 @@ export function MobileNav({ visible }: MobileNavProps) {
             gap: 4,
           }}
         >
-          {nav.links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              style={{
-                color: "#ffffff",
-                fontFamily: "var(--font-ui)",
-                fontWeight: 600,
-                fontSize: 18,
-                padding: "12px 8px",
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
+          {nav.links.map((link) => {
+            const section = link.href.slice(1) as SectionId;
+            const isActive = activeSection === section;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                onClick={(e) => {
+                  handleNavClick(e, link.href, layoutScale);
+                  setOpen(false);
+                }}
+                style={{
+                  color: isActive ? "#f5c542" : "#ffffff",
+                  fontFamily: "var(--font-ui)",
+                  fontWeight: isActive ? 700 : 600,
+                  fontSize: 18,
+                  padding: "12px 8px",
+                }}
+              >
+                {link.label}
+              </a>
+            );
+          })}
           <a
             href={nav.register.href}
             target="_blank"

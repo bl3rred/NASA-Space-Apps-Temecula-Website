@@ -1,38 +1,45 @@
 import { MobileNav } from "./components/Navigation";
 import { PageCanvas } from "./components/PageCanvas";
 import { FRAME_HEIGHT, FRAME_WIDTH } from "./layout/frame";
-import { MOBILE_BREAKPOINT, useViewportWidth } from "./layout/viewport";
+import { MOBILE_BREAKPOINT, useViewportMetrics } from "./layout/viewport";
+import { useScrollSpy } from "./scroll/useScrollSpy";
 
 export default function App() {
-  const width = useViewportWidth();
-  const scale = width / FRAME_WIDTH;
-  const isMobile = width < MOBILE_BREAKPOINT;
+  const { layoutWidth, layoutScale } = useViewportMetrics();
+  const isMobile = layoutWidth < MOBILE_BREAKPOINT;
+  const activeSection = useScrollSpy(layoutScale);
 
   return (
     <>
-      <MobileNav visible={isMobile} />
+      <MobileNav visible={isMobile} activeSection={activeSection} layoutScale={layoutScale} />
       <div
         className="scale-frame"
         style={{
-          position: "relative",
+          display: "flex",
+          justifyContent: "center",
           width: "100%",
-          height: FRAME_HEIGHT * scale,
           overflow: "hidden",
           background: "#07173f",
         }}
       >
         <div
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: FRAME_WIDTH,
-            height: FRAME_HEIGHT,
-            transform: `scale(${scale})`,
-            transformOrigin: "top left",
+            width: layoutWidth,
+            height: FRAME_HEIGHT * layoutScale,
+            overflow: "hidden",
+            flexShrink: 0,
           }}
         >
-          <PageCanvas isMobile={isMobile} />
+          <div
+            style={{
+              width: FRAME_WIDTH,
+              height: FRAME_HEIGHT,
+              transform: `scale(${layoutScale})`,
+              transformOrigin: "top left",
+            }}
+          >
+            <PageCanvas isMobile={isMobile} activeSection={activeSection} layoutScale={layoutScale} />
+          </div>
         </div>
       </div>
     </>

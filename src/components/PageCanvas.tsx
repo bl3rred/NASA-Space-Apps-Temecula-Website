@@ -5,13 +5,16 @@ import { SponsorsSection } from "./SponsorsSection";
 import { FaqFooterSection } from "./FaqFooterSection";
 import { CanvasNavHits } from "./Navigation";
 import { FRAME_HEIGHT, FRAME_WIDTH, SLICES } from "../layout/frame";
+import type { SectionId } from "../scroll/scrollCoords";
 
 type PageCanvasProps = {
   isMobile: boolean;
+  activeSection: SectionId;
+  layoutScale: number;
 };
 
 /** Fixed 1440 Figma canvas — slices plus overlay hit targets. */
-export function PageCanvas({ isMobile }: PageCanvasProps) {
+export function PageCanvas({ isMobile, activeSection, layoutScale }: PageCanvasProps) {
   return (
     <main
       className="page"
@@ -59,7 +62,7 @@ export function PageCanvas({ isMobile }: PageCanvasProps) {
           }}
         />
       ) : (
-        <CanvasNavHits />
+        <CanvasNavHits activeSection={activeSection} layoutScale={layoutScale} />
       )}
       <HeroSection />
       <AboutSection />

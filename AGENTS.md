@@ -8,6 +8,8 @@
 - Fix illegible baked-in slice text with crops or opaque covers, not duplicate HTML overlays stacked on the slice.
 - Nav legibility cover: opaque backing only from x=800 for right-side links, not full width (preserves top-left star).
 - Footer credit: transparent HTML overlay anchored at the bottom of the page on the ruins art.
+- Reject per-character overlay animations on composite slices; keep v1-stable slice-only visuals as the base when overlay experiments break the page.
+- FAQ interactivity: opaque covers over baked PNG FAQ bars in slice 04, with HTML FAQAccordion aligned to Figma coords on top.
 
 ## Learned Workspace Facts
 
@@ -17,3 +19,7 @@
 - Chosen product layout is fill-width (`scale` / `VITE_LAYOUT=scale`): scale the 1440 canvas to viewport width. Center-plus-edge-bleed (`bleed`) was rejected.
 - Figma 100% zoom reference screenshots live at the project root: `top.png`, `tracks - skyrocket.png`, `schedule-ocean.png`, `ocean.png`.
 - `npm run fetch-assets` downloads Figma illustrations into `public/assets`; embedded Figma asset URLs expire.
+- Tag **`v1-stable`** is the pre-animation rollback point; unpatched slice originals live in `public/assets/slices-original/`.
+- Tag **`v2-no-anim`** is the post-FAQ, post-zoom-fix, no-motion snapshot (fill-width clip scale, no canvas transforms for animation). Restore with `git checkout v2-no-anim`.
+- Slice seam at y=4007 (01-hero-about → 02-tracks-schedule join): restore original slices and use 1px overlap to hide subpixel gaps.
+- FAQ question bars are baked into slice 04; working expand/collapse requires aligned HTML accordion plus opaque covers hiding the PNG bars.

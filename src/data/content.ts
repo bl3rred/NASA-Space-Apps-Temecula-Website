@@ -100,7 +100,7 @@ export const faq = {
     },
     {
       q: "I still have a question. Who should I contact?",
-      a: "Email the organizing team at spaceapps.temecula@gmail.com or message us on the Temecula Space Apps social channels. We reply within a day.",
+      a: "Email the organizing team at spaceapps.temecula@gmail.com or message us on the Temecula Space Apps social channels. We'll get back to you as soon as possible.",
     },
   ],
 } as const;
