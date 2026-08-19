@@ -1,80 +1,70 @@
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { nav } from "../data/content";
-import { FRAME_WIDTH } from "../layout/frame";
 import { handleNavClick } from "../scroll/smoothScroll";
 import type { SectionId } from "../scroll/scrollCoords";
 
-/** Cover only the link row so stars on the left stay visible. */
-const NAV_COVER_LEFT = 800;
-const NAV_HITS: Array<{ href: string; left: number; width: number; section: SectionId }> = [
-  { href: "#about", left: 823, width: 56, section: "about" },
-  { href: "#tracks", left: 918, width: 62, section: "tracks" },
-  { href: "#schedule", left: 1019, width: 82, section: "schedule" },
-  { href: "#sponsors", left: 1140, width: 86, section: "sponsors" },
-  { href: "#faq", left: 1265, width: 38, section: "faq" },
-];
+function isExternalHref(href: string): boolean {
+  return href.startsWith("http://") || href.startsWith("https://");
+}
 
-type CanvasNavHitsProps = {
+function CtaAnchor({
+  href,
+  className,
+  children,
+  onClick,
+}: {
+  href: string;
+  className?: string;
+  children: string;
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+}) {
+  const external = isExternalHref(href);
+  return (
+    <a
+      className={className}
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      onClick={onClick}
+    >
+      {children}
+    </a>
+  );
+}
+
+type StickyNavProps = {
+  visible: boolean;
   activeSection: SectionId;
   layoutScale: number;
 };
 
-/** Desktop HTML labels over the illustrated nav. Hidden on mobile. */
-export function CanvasNavHits({ activeSection, layoutScale }: CanvasNavHitsProps) {
+/** Desktop-only fixed header outside the scaled canvas. */
+export function DesktopStickyNav({ visible, activeSection, layoutScale }: StickyNavProps) {
+  if (!visible) return null;
+
   return (
-    <nav
-      aria-label="Primary"
-      style={{
-        position: "absolute",
-        top: 0,
-        left: NAV_COVER_LEFT,
-        width: FRAME_WIDTH - NAV_COVER_LEFT,
-        height: 88,
-        zIndex: 3,
-        pointerEvents: "none",
-      }}
-    >
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "#07173f",
-        }}
-      />
-      {NAV_HITS.map((hit) => {
-        const link = nav.links.find((l) => l.href === hit.href);
-        const isActive = activeSection === hit.section;
+    <nav className="nav-desktop-sticky" aria-label="Primary">
+      {nav.links.map((link) => {
+        const section = link.href.slice(1) as SectionId;
+        const isActive = activeSection === section;
         return (
           <a
-            key={hit.href}
-            href={hit.href}
+            key={link.href}
+            className={isActive ? "nav-desktop-link is-active" : "nav-desktop-link"}
+            href={link.href}
             aria-current={isActive ? "page" : undefined}
-            onClick={(e) => handleNavClick(e, hit.href, layoutScale)}
-            style={{
-              position: "absolute",
-              left: hit.left - NAV_COVER_LEFT,
-              top: 0,
-              width: hit.width,
-              height: 88,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: isActive ? "#f5c542" : "#ffffff",
-              fontFamily: "var(--font-ui)",
-              fontWeight: isActive ? 700 : 500,
-              fontSize: 16,
-              letterSpacing: "0.04em",
-              whiteSpace: "nowrap",
-              pointerEvents: "auto",
-              zIndex: 1,
-              transition: "color 0.25s ease, font-weight 0.25s ease",
-            }}
+            onClick={(e) => handleNavClick(e, link.href, layoutScale)}
           >
-            {link?.label ?? hit.href.slice(1)}
+            {link.label}
           </a>
         );
       })}
+      <CtaAnchor className="nav-desktop-register" href={nav.register.href}>
+        Pre-register
+      </CtaAnchor>
+      <CtaAnchor className="nav-desktop-mentor" href={nav.mentor.href}>
+        {nav.mentor.label}
+      </CtaAnchor>
     </nav>
   );
 }
@@ -142,6 +132,7 @@ export function MobileNav({ visible, activeSection, layoutScale }: MobileNavProp
             return (
               <a
                 key={link.href}
+                className="nav-mobile-link"
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
                 onClick={(e) => {
@@ -160,25 +151,20 @@ export function MobileNav({ visible, activeSection, layoutScale }: MobileNavProp
               </a>
             );
           })}
-          <a
+          <CtaAnchor
+            className="nav-mobile-register"
             href={nav.register.href}
-            target="_blank"
-            rel="noopener noreferrer"
             onClick={() => setOpen(false)}
-            style={{
-              marginTop: 8,
-              color: "#07173f",
-              background: "#f5c542",
-              fontFamily: "var(--font-ui)",
-              fontWeight: 700,
-              fontSize: 16,
-              textAlign: "center",
-              borderRadius: 999,
-              padding: "12px 16px",
-            }}
           >
             Pre-register now
-          </a>
+          </CtaAnchor>
+          <CtaAnchor
+            className="nav-mobile-mentor"
+            href={nav.mentor.href}
+            onClick={() => setOpen(false)}
+          >
+            {nav.mentor.label}
+          </CtaAnchor>
         </div>
       ) : null}
     </div>

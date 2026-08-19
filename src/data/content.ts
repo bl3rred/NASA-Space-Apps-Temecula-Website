@@ -12,6 +12,10 @@ export const nav = {
     label: "Register",
     href: "https://docs.google.com/forms/d/e/1FAIpQLScSycfA_9ekC7u_qANe-tpZkVcSWiwmgBCmQ6K-ZpjXcxH9rw/viewform",
   },
+  mentor: {
+    label: "Mentor / Judge",
+    href: "#", // placeholder — swap when the form URL is ready
+  },
 } as const;
 
 export const hero = {
@@ -35,7 +39,7 @@ export const about = {
   impactStats: [
     "114k+ Participants",
     "551 Local Events",
-    "162 Countries & Territories",
+    "167 Countries & Territories",
   ],
 } as const;
 

@@ -1,5 +1,25 @@
 # Changelog
 
+## v2.9 — star glow, plane motion, About match (2026-08-17)
+
+- Illustrated stars use a gold radial glow on Figma sprites only (no extra dots)
+- Hero jet+banner bob in a clipped window over an inpainted sky patch (slice stays still)
+- About matches the painted Figma slice (no HTML slabs or doubled glyphs)
+
+## v2.8 — slim motion + sharp About (2026-08-17)
+
+- Kept nav underlines, register CTA pulse, and FAQ height expand; removed ocean bubbles and in-view fades
+- Star twinkles sit on Figma sprite positions plus a few scattered extras (no left-side grid)
+- Wind streaks + light banner flutter around the NASA SPACE APPS plane (slice stays still)
+- About copy: opaque covers + sharp HTML at Figma coords (NASA logo uncovered)
+
+## v2.7 — overlay-only polish motion (2026-08-17)
+
+- Nav hover underline, mobile menu fade, register CTA pulse, FAQ height expand
+- Ambient sky twinkles (hero Y only) and ocean bubbles in slice 04 local coords
+- FAQ/footer in-view stagger via IntersectionObserver
+- No canvas `scale`/`translate` for motion; `prefers-reduced-motion` keeps overlays static
+
 ## v2-no-anim — snapshot (2026-08-17)
 
 Static fill-width page after FAQ overlay, 1px slice seams, and zoom/layout fixes. **No** canvas scroll transitions, GSAP, or ambient overlays.

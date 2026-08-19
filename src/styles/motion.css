@@ -1,0 +1,532 @@
+/* Overlay-only polish. Never applied to the canvas scale wrapper or PNG slices. */
+
+@keyframes motion-cta-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 197, 66, 0.35);
+    background: rgba(245, 197, 66, 0.08);
+  }
+  50% {
+    box-shadow: 0 0 18px 4px rgba(245, 197, 66, 0.22);
+    background: rgba(245, 197, 66, 0.16);
+  }
+}
+
+@keyframes motion-wind-stream {
+  0% {
+    transform: translate(-60px, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.48;
+  }
+  50% {
+    transform: translate(70px, -2px);
+    opacity: 0.52;
+  }
+  85% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(160px, 1px);
+    opacity: 0;
+  }
+}
+
+@keyframes motion-plane-fly {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  18% {
+    transform: translate(2px, -3px) rotate(-1.8deg);
+    filter: drop-shadow(-5px 1px 2px rgba(7, 23, 63, 0.18));
+  }
+  42% {
+    transform: translate(1px, 2px) rotate(1.4deg);
+    filter: drop-shadow(4px 2px 2px rgba(7, 23, 63, 0.14));
+  }
+  68% {
+    transform: translate(-1px, -4px) rotate(-2.2deg);
+    filter: drop-shadow(-6px 1px 3px rgba(7, 23, 63, 0.2));
+  }
+  88% {
+    transform: translate(0, 1px) rotate(0.8deg);
+    filter: drop-shadow(2px 1px 2px rgba(7, 23, 63, 0.12));
+  }
+}
+
+@keyframes biome-wind-track {
+  0% {
+    translate: 0 0;
+    opacity: 0;
+  }
+  5% {
+    opacity: var(--wind-opacity, 0.65);
+  }
+  18% {
+    translate: calc(var(--wind-x-end, 1520px) * 0.12) 0;
+  }
+  38% {
+    translate: calc(var(--wind-x-end, 1520px) * 0.48) 0;
+  }
+  52% {
+    translate: calc(var(--wind-x-end, 1520px) * 0.55) 0;
+  }
+  62% {
+    translate: calc(var(--wind-x-end, 1520px) * 0.58) 0;
+  }
+  82% {
+    translate: calc(var(--wind-x-end, 1520px) * 0.86) 0;
+  }
+  92% {
+    opacity: var(--wind-opacity, 0.65);
+  }
+  100% {
+    translate: var(--wind-x-end, 1520px) 0;
+    opacity: 0;
+  }
+}
+
+@keyframes biome-wind-flutter {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  16% {
+    translate: var(--wind-x1, 14px) var(--wind-y1, -22px);
+  }
+  38% {
+    translate: var(--wind-x2, -10px) var(--wind-y2, 16px);
+  }
+  58% {
+    translate: var(--wind-x3, 22px) var(--wind-y3, -10px);
+  }
+  78% {
+    translate: var(--wind-x4, -8px) var(--wind-y4, 12px);
+  }
+}
+
+@keyframes biome-wind-tumble {
+  0% {
+    rotate: var(--wind-rotate-start, 0deg);
+  }
+  30% {
+    rotate: calc(var(--wind-rotate-start, 0deg) + 12deg);
+  }
+  55% {
+    rotate: calc(var(--wind-rotate-start, 0deg) - 8deg);
+  }
+  80% {
+    rotate: calc(var(--wind-rotate-start, 0deg) + 6deg);
+  }
+  100% {
+    rotate: var(--wind-rotate-end, 18deg);
+  }
+}
+
+@keyframes biome-bubble {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.4;
+  }
+  14% {
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(var(--biome-sway, 16px), calc(var(--biome-rise, -1400px) * 0.5))
+      rotate(10deg) scale(1.05);
+  }
+  100% {
+    transform: translate(calc(var(--biome-sway, 16px) * -0.45), var(--biome-rise, -1400px))
+      rotate(-8deg) scale(1.12);
+    opacity: 0;
+  }
+}
+
+.nav-hit {
+  position: relative;
+}
+
+.nav-hit::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  width: 0;
+  height: 2px;
+  background: #f5c542;
+  transform: translateX(-50%);
+  transition: width 0.2s ease;
+}
+
+.nav-hit:hover::after,
+.nav-hit.is-active::after {
+  width: 70%;
+}
+
+.nav-hit:hover:not(.is-active) {
+  color: #f5c542;
+}
+
+.nav-mobile-link {
+  transition: color 0.2s ease;
+}
+
+.nav-mobile-link:hover {
+  color: #f5c542;
+}
+
+.cta-hit {
+  border-radius: 10px;
+  animation: motion-cta-pulse 2.4s ease-in-out infinite;
+}
+
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease;
+}
+
+.faq-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.plane-fly {
+  z-index: 2;
+  animation: motion-plane-fly 7.5s ease-in-out infinite;
+}
+
+.plane-lockup-art {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1388px;
+  height: 400px;
+  max-width: none;
+}
+
+.plane-wind-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.plane-wind-back {
+  z-index: 1;
+}
+
+.plane-wind-front {
+  z-index: 3;
+}
+
+.plane-wind-line {
+  position: absolute;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(112, 182, 235, 0) 0%,
+    rgba(112, 182, 235, 0.35) 28%,
+    rgba(182, 228, 255, 0.96) 62%,
+    rgba(112, 182, 235, 0) 100%
+  );
+  filter: blur(0.35px);
+  animation: motion-wind-stream 3.8s ease-in-out infinite;
+}
+
+.plane-wind-line-a {
+  animation-delay: 0s;
+  animation-duration: 3.4s;
+}
+
+.plane-wind-line-b {
+  animation-delay: 0.8s;
+  animation-duration: 4.1s;
+}
+
+.plane-wind-line-c {
+  animation-delay: 1.4s;
+  animation-duration: 3.6s;
+}
+
+.plane-wind-line-d {
+  animation-delay: 0.4s;
+  animation-duration: 4.4s;
+}
+
+.plane-wind-line-e {
+  animation-delay: 2s;
+  animation-duration: 3.2s;
+}
+
+.plane-wind-line-f {
+  animation-delay: 2.5s;
+  animation-duration: 4s;
+}
+
+.plane-wind-line-g {
+  animation-delay: 0.2s;
+  animation-duration: 3.9s;
+  opacity: 0.48;
+}
+
+.plane-wind-line-h {
+  animation-delay: 1.1s;
+  animation-duration: 4.3s;
+  opacity: 0.44;
+}
+
+.plane-wind-line-i {
+  animation-delay: 1.8s;
+  animation-duration: 3.5s;
+  opacity: 0.4;
+}
+
+.plane-wind-line-j {
+  animation-delay: 0.6s;
+  animation-duration: 4.2s;
+}
+
+.plane-wind-line-k {
+  animation-delay: 1.5s;
+  animation-duration: 3.3s;
+}
+
+.plane-wind-line-n {
+  animation-delay: 0.3s;
+  animation-duration: 4.6s;
+}
+
+.plane-wind-line-o {
+  animation-delay: 1.2s;
+  animation-duration: 3.9s;
+}
+
+.plane-wind-line-p {
+  animation-delay: 2.2s;
+  animation-duration: 4.2s;
+}
+
+.plane-wind-line-q {
+  animation-delay: 0.9s;
+  animation-duration: 3.7s;
+}
+
+.biome-wind-leaf {
+  --wind-rotate-start: 0deg;
+  --wind-rotate-end: 18deg;
+  --wind-x-end: 1520px;
+  --wind-opacity: 0.65;
+  position: absolute;
+  filter: url("#biome-wobble");
+  pointer-events: none;
+}
+
+.biome-wind-track {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: biome-wind-track var(--wind-duration, 16s) var(--wind-track-ease, ease-in-out) 1;
+  animation-delay: var(--wind-delay, 0s);
+  animation-fill-mode: both;
+}
+
+.biome-wind-body {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: bottom center;
+  animation:
+    biome-wind-flutter var(--wind-flutter-duration, 2.8s) ease-in-out infinite,
+    biome-wind-tumble var(--wind-duration, 16s) var(--wind-tumble-ease, ease-in-out) 1;
+  animation-fill-mode: both;
+}
+
+.biome-wind-leaf--leaf {
+  --wind-track-ease: ease-in-out;
+  --wind-flutter-duration: 2.1s;
+  --wind-tumble-ease: ease-in-out;
+}
+
+.biome-wind-leaf--dandelion {
+  --wind-track-ease: ease-in-out;
+  --wind-flutter-duration: 4.2s;
+  --wind-tumble-ease: ease-in-out;
+  filter: none;
+}
+
+.biome-wind-leaf svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.biome-wind-dandelion-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center bottom;
+  pointer-events: none;
+}
+
+.biome-bubble {
+  position: absolute;
+  --biome-rise: -1400px;
+  --biome-sway: 16px;
+  box-sizing: border-box;
+  border: 2px solid var(--sky-pale);
+  border-radius: 58% 42% 55% 45%;
+  background: rgba(184, 232, 246, 0.22);
+  opacity: 0.72;
+  filter: url("#biome-wobble");
+  animation: biome-bubble 12s ease-in infinite;
+}
+
+.nav-desktop-sticky {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 18px 10px 22px;
+  background: rgba(7, 23, 63, 0.92);
+  border-bottom-left-radius: 12px;
+}
+
+.nav-desktop-link {
+  position: relative;
+  color: #ffffff;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  padding: 8px 8px;
+  white-space: nowrap;
+}
+
+.nav-desktop-link.is-active {
+  color: #f5c542;
+  font-weight: 700;
+}
+
+.nav-desktop-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 2px;
+  background: #f5c542;
+  transform: translateX(-50%);
+  transition: width 0.2s ease;
+}
+
+.nav-desktop-link:hover::after,
+.nav-desktop-link.is-active::after {
+  width: 60%;
+}
+
+.nav-desktop-link:hover:not(.is-active) {
+  color: #f5c542;
+}
+
+.nav-desktop-register {
+  margin-left: 8px;
+  color: #07173f;
+  background: #f5c542;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-align: center;
+  border-radius: 999px;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+.nav-desktop-register:hover {
+  color: #07173f;
+}
+
+.nav-desktop-mentor {
+  margin-left: 6px;
+  color: #07173f;
+  background: #f5c542;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-align: center;
+  border-radius: 999px;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+.nav-desktop-mentor:hover {
+  color: #07173f;
+}
+
+.nav-mobile-register,
+.nav-mobile-mentor {
+  margin-top: 8px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 999px;
+  padding: 12px 16px;
+}
+
+.nav-mobile-register {
+  color: #07173f;
+  background: #f5c542;
+}
+
+.nav-mobile-mentor {
+  color: #07173f;
+  background: #f5c542;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-hit,
+  .faq-panel,
+  .plane-fly,
+  .plane-wind-line,
+  .biome-wind-leaf,
+  .biome-wind-track,
+  .biome-wind-body,
+  .biome-bubble,
+  .nav-hit::after,
+  .nav-desktop-link::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .cta-hit {
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .plane-fly {
+    filter: none;
+  }
+
+  .biome-wind-leaf,
+  .biome-bubble {
+    animation: none !important;
+    animation-fill-mode: both !important;
+    opacity: 0;
+  }
+}

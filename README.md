@@ -86,3 +86,8 @@ scripts/
 
 - The NASA Space Apps local-event logo asset shipped from Figma as a template with editing instructions baked in; it is masked to a circular crop showing only the badge.
 - Track cards and the schedule/sponsors panels show "Coming Soon" / "To be announced" placeholders, matching the source frame's state at handoff.
+
+## GitHub Pages base path
+
+If you deploy to GitHub Pages (`https://ORG.github.io/REPO/`), the site is served from `/REPO/` (not `/`).
+Set `VITE_BASE=/REPO/` in your build environment so Vite generates correct asset URLs.

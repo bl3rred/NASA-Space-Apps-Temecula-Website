@@ -3,18 +3,13 @@ import { AboutSection } from "./AboutSection";
 import { TracksSection } from "./TracksSection";
 import { SponsorsSection } from "./SponsorsSection";
 import { FaqFooterSection } from "./FaqFooterSection";
-import { CanvasNavHits } from "./Navigation";
 import { FRAME_HEIGHT, FRAME_WIDTH, SLICES } from "../layout/frame";
-import type { SectionId } from "../scroll/scrollCoords";
-
-type PageCanvasProps = {
-  isMobile: boolean;
-  activeSection: SectionId;
-  layoutScale: number;
-};
+import { AmbientSky } from "../motion/AmbientSky";
+import { AboutWindParticles } from "../motion/AboutWindParticles";
+import { BiomeWeather } from "../motion/BiomeWeather";
 
 /** Fixed 1440 Figma canvas — slices plus overlay hit targets. */
-export function PageCanvas({ isMobile, activeSection, layoutScale }: PageCanvasProps) {
+export function PageCanvas() {
   return (
     <main
       className="page"
@@ -43,27 +38,26 @@ export function PageCanvas({ isMobile, activeSection, layoutScale }: PageCanvasP
             height: slice.height,
             maxWidth: "none",
             pointerEvents: "none",
-            zIndex: 0,
+            zIndex: slice.zIndex,
           }}
         />
       ))}
-      {isMobile ? (
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 800,
-            width: FRAME_WIDTH - 800,
-            height: 88,
-            background: "#07173f",
-            zIndex: 2,
-            pointerEvents: "none",
-          }}
-        />
-      ) : (
-        <CanvasNavHits activeSection={activeSection} layoutScale={layoutScale} />
-      )}
+      <AboutWindParticles />
+      <AmbientSky />
+      <BiomeWeather />
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 800,
+          width: FRAME_WIDTH - 800,
+          height: 88,
+          background: "#07173f",
+          zIndex: 2,
+          pointerEvents: "none",
+        }}
+      />
       <HeroSection />
       <AboutSection />
       <TracksSection />

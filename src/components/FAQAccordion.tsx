@@ -51,6 +51,7 @@ export function FAQAccordion({ question, answer, defaultOpen = false }: FAQAccor
         <span style={{ flex: 1 }}>{question}</span>
         <span
           aria-hidden
+          className="faq-plus"
           style={{
             fontSize: 28,
             lineHeight: 1,
@@ -65,17 +66,22 @@ export function FAQAccordion({ question, answer, defaultOpen = false }: FAQAccor
       <div
         id={panelId}
         role="region"
-        hidden={!open}
-        style={{
-          padding: open ? "0 22px 18px" : 0,
-          fontFamily: "var(--font-ui)",
-          fontWeight: 400,
-          fontSize: 18,
-          lineHeight: 1.5,
-          color: "rgba(255,255,255,0.85)",
-        }}
+        className={open ? "faq-panel is-open" : "faq-panel"}
+        aria-hidden={!open}
       >
-        {answer}
+        <div
+          className="faq-panel-inner"
+          style={{
+            padding: open ? "0 22px 18px" : "0 22px 0",
+            fontFamily: "var(--font-ui)",
+            fontWeight: 400,
+            fontSize: 18,
+            lineHeight: 1.5,
+            color: "rgba(255,255,255,0.85)",
+          }}
+        >
+          {answer}
+        </div>
       </div>
     </div>
   );

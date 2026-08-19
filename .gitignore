@@ -12,3 +12,14 @@ Thumbs.db
 tsconfig.tsbuildinfo
 
 .cursor/
+
+# Non-deploy artifacts / local QA
+qa/
+
+# Root-only SEO source inputs (we use resized copies in /public)
+website share image.png
+top image norm.png
+top image funny.png
+
+# Optional: local source for the dandelion texture (public/ already has deploy-ready copy)
+dandelion.png
