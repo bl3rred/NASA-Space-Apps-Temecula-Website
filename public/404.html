@@ -132,32 +132,19 @@
       <p class="kicker">NASA Space Apps Challenge · Temecula</p>
       <p class="sub">Looks like you drifted off course. The landing page is still right this way.</p>
 
-      <a class="btn" id="home-link" href="https://bl3rred.github.io/NASA-Space-Apps-Temecula-Website/">
+      <a class="btn" id="home-link" href="/">
         Take me back to the landing page
       </a>
       <p class="countdown">Redirecting in <span id="count">5</span>s…</p>
 
       <noscript>
-        <p class="sub"><a href="https://bl3rred.github.io/NASA-Space-Apps-Temecula-Website/">Go to the homepage</a></p>
+        <p class="sub"><a href="/">Go to the homepage</a></p>
       </noscript>
     </main>
 
     <script>
-      // Custom 404 for GitHub Pages, where the site lives at
-      // https://bl3rred.github.io/NASA-Space-Apps-Temecula-Website/.
-      // Show a brief branded pause with a manual link, then bounce back to the
-      // site root. location.replace() keeps the Back button from looping.
-      //
-      // The repo base is hardcoded here on purpose: the build uses a relative
-      // Vite base ("./"), so a 404 page served at an arbitrary depth has no
-      // way to compute the root itself. The same repo name is already baked
-      // into index.html (canonical / og:url / og:image) and sitemap.xml.
       (function () {
-        var repoBase = "/NASA-Space-Apps-Temecula-Website/";
-        var target =
-          location.pathname.indexOf(repoBase) === 0
-            ? location.origin + repoBase // GitHub Pages: /REPO/… → /REPO/
-            : location.origin + "/"; // Vercel and other root deploys
+        var target = location.origin + "/";
 
         var link = document.getElementById("home-link");
         link.href = target;

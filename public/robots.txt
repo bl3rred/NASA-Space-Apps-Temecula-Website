@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bl3rred.github.io/NASA-Space-Apps-Temecula-Website/sitemap.xml
+Sitemap: https://temeculaspaceapps.vercel.app/sitemap.xml
 
