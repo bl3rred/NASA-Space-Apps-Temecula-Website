@@ -30,10 +30,12 @@ export const SECTION_IDS: SectionId[] = [
   "faq",
 ];
 
-/** About nav: match attached framing; pull back slightly on tall mobile viewports. */
+/** About nav: adapt the anchor to both tall portrait and short landscape viewports. */
 export function aboutNavScrollFigmaY(layoutScale: number): number {
   const vh = viewportFigmaHeight(layoutScale);
-  return ABOUT_NAV_Y - Math.max(0, (vh - ABOUT_NAV_BASE_VH) * 0.12);
+  const tallViewportPullback = Math.max(0, vh - ABOUT_NAV_BASE_VH) * 0.12;
+  const shortViewportAdjustment = Math.max(0, ABOUT_NAV_BASE_VH - vh) * 0.45;
+  return ABOUT_NAV_Y - tallViewportPullback + shortViewportAdjustment;
 }
 
 /** Visual anchor Y for nav clicks (may differ from SECTION_TOP for scroll spy). */

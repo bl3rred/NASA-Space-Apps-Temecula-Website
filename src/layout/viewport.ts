@@ -47,11 +47,14 @@ export function useViewportMetrics(): ViewportMetrics {
       timers = [250, 650].map((delay) => setTimeout(update, delay));
     };
 
+    const orientationMediaQuery = window.matchMedia("(orientation: landscape)");
+
     if (isMobileDevice()) {
       // Do not subscribe to mobile resize: pinch zoom can emit resize-like
       // signals in some browsers. Only real orientation changes resize layout.
       window.addEventListener("orientationchange", onMobileOrientationChange);
       window.screen.orientation?.addEventListener("change", onMobileOrientationChange);
+      orientationMediaQuery.addEventListener("change", onMobileOrientationChange);
     } else {
       window.addEventListener("resize", update);
       window.addEventListener("orientationchange", update);
@@ -61,6 +64,7 @@ export function useViewportMetrics(): ViewportMetrics {
       timers.forEach((timer) => clearTimeout(timer));
       window.removeEventListener("orientationchange", onMobileOrientationChange);
       window.screen.orientation?.removeEventListener("change", onMobileOrientationChange);
+      orientationMediaQuery.removeEventListener("change", onMobileOrientationChange);
       window.removeEventListener("resize", update);
       window.removeEventListener("orientationchange", update);
     };

@@ -1,18 +1,61 @@
 import type { MouseEvent } from "react";
 import { SECTION_TOP } from "../layout/frame";
-import { isMobileDevice } from "../layout/viewport";
 import { navScrollFigmaY, sectionScrollTop, type SectionId } from "./scrollCoords";
+
+let scrollAnimationFrame: number | null = null;
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+function easeInOutCubic(progress: number): number {
+  return progress < 0.5
+    ? 4 * progress * progress * progress
+    : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+}
+
+function animateScrollTo(targetY: number): void {
+  if (scrollAnimationFrame !== null) {
+    window.cancelAnimationFrame(scrollAnimationFrame);
+  }
+
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  if (Math.abs(distance) < 1) {
+    window.scrollTo({ top: targetY, behavior: "auto" });
+    return;
+  }
+
+  // Give mobile the same deliberate, readable travel as the desktop version;
+  // the longer duration prevents large scaled jumps from looking stuttery.
+  const duration = Math.min(1400, Math.max(850, Math.abs(distance) * 0.3));
+  const startedAt = performance.now();
+
+  const step = (now: number) => {
+    const progress = Math.min(1, (now - startedAt) / duration);
+    window.scrollTo({
+      top: startY + distance * easeInOutCubic(progress),
+      behavior: "auto",
+    });
+
+    if (progress < 1) {
+      scrollAnimationFrame = window.requestAnimationFrame(step);
+    } else {
+      scrollAnimationFrame = null;
+    }
+  };
+
+  scrollAnimationFrame = window.requestAnimationFrame(step);
+}
+
 export function smoothScrollToSection(sectionId: SectionId, layoutScale: number): void {
   const targetY = sectionScrollTop(navScrollFigmaY(sectionId, layoutScale), layoutScale);
-  // On mobile, instant scroll avoids the black-flash artifact from smooth
-  // interpolation across the navy canvas background.
-  const behavior = prefersReducedMotion() || isMobileDevice() ? "auto" : "smooth";
-  window.scrollTo({ top: targetY, behavior });
+
+  if (prefersReducedMotion()) {
+    window.scrollTo({ top: targetY, behavior: "auto" });
+  } else {
+    animateScrollTo(targetY);
+  }
 }
 
 export function handleNavClick(
