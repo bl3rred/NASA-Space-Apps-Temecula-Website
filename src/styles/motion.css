@@ -442,38 +442,22 @@
   color: #f5c542;
 }
 
-.nav-desktop-register {
+.nav-desktop-register,
+.nav-desktop-mentor {
   margin-left: 8px;
   color: #07173f;
   background: #f5c542;
   font-family: var(--font-ui);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.03em;
   text-align: center;
   border-radius: 999px;
-  padding: 8px 14px;
+  padding: 8px 12px;
   white-space: nowrap;
 }
 
-.nav-desktop-register:hover {
-  color: #07173f;
-}
-
-.nav-desktop-mentor {
-  margin-left: 6px;
-  color: #07173f;
-  background: #f5c542;
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.03em;
-  text-align: center;
-  border-radius: 999px;
-  padding: 8px 14px;
-  white-space: nowrap;
-}
-
+.nav-desktop-register:hover,
 .nav-desktop-mentor:hover {
   color: #07173f;
 }

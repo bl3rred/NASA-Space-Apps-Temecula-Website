@@ -12,6 +12,7 @@ Thumbs.db
 tsconfig.tsbuildinfo
 
 .cursor/
+.freebuff/
 
 # Non-deploy artifacts / local QA
 qa/

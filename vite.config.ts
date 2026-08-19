@@ -2,9 +2,10 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  // GitHub Pages serves from https://ORG.github.io/REPO/ (not "/"),
-  // so use VITE_BASE during build/deploy.
-  base: process.env.VITE_BASE ?? "/",
+  // Relative base (./) so the SAME build artifact works on both Vercel
+  // (served from "/") and GitHub Pages (served from /REPO/). Set VITE_BASE
+  // to a canonical absolute base (e.g. "/REPO/") only if you want that.
+  base: process.env.VITE_BASE ?? "./",
   plugins: [react()],
   server: {
     host: "0.0.0.0",

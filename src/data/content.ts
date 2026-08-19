@@ -10,11 +10,12 @@ export const nav = {
   ],
   register: {
     label: "Register",
-    href: "https://docs.google.com/forms/d/e/1FAIpQLScSycfA_9ekC7u_qANe-tpZkVcSWiwmgBCmQ6K-ZpjXcxH9rw/viewform",
+    href: "https://docs.google.com/forms/d/e/1FAIpQLSc54hN5GXtcjf6QTEK6Gy2a4XwdrwcyXBNQGHn_dePyJCOZHA/viewform?usp=publish-editor",
   },
   mentor: {
-    label: "Mentor / Judge",
-    href: "#", // placeholder — swap when the form URL is ready
+    // One form covers all three non-participant roles: judge, mentor, workshop lead.
+    label: "Get Involved",
+    href: "https://forms.gle/XgQKbPTLiMpn5vsU7",
   },
 } as const;
 

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#07173f" />
+    <title>Lost in space · NASA Space Apps Challenge — Temecula</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Koulen&family=Source+Sans+3:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: "Source Sans 3", system-ui, sans-serif;
+        background-color: #07173f;
+        background-image:
+          radial-gradient(1.5px 1.5px at 18% 22%, rgba(255, 255, 255, 0.85), transparent),
+          radial-gradient(1px 1px at 32% 68%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(2px 2px at 47% 12%, rgba(255, 255, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 63% 42%, rgba(255, 255, 255, 0.55), transparent),
+          radial-gradient(1.5px 1.5px at 71% 78%, rgba(255, 255, 255, 0.8), transparent),
+          radial-gradient(1px 1px at 84% 25%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(2px 2px at 90% 58%, rgba(255, 255, 255, 0.5), transparent),
+          radial-gradient(1px 1px at 8% 85%, rgba(255, 255, 255, 0.7), transparent),
+          radial-gradient(ellipse 80% 60% at 50% -10%, rgba(88, 118, 220, 0.45), transparent),
+          radial-gradient(ellipse 70% 50% at 85% 110%, rgba(64, 92, 190, 0.35), transparent);
+      }
+      .card {
+        max-width: 34rem;
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+      .planet {
+        margin-bottom: 1.25rem;
+      }
+      .kicker {
+        margin: 0 0 0.4rem;
+        font-size: 0.95rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #9fc4ff;
+      }
+      .title {
+        margin: 0;
+        font-family: "Koulen", sans-serif;
+        font-size: clamp(5.5rem, 18vw, 8.5rem);
+        line-height: 0.95;
+        letter-spacing: 0.04em;
+        color: #7fd0ff;
+        text-shadow: 0 0 24px rgba(127, 208, 255, 0.35);
+      }
+      .sub {
+        margin: 0.75rem auto 1.75rem;
+        max-width: 26rem;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        color: #dbe7ff;
+      }
+      .btn {
+        display: inline-block;
+        padding: 0.85rem 1.75rem;
+        border-radius: 999px;
+        font-family: "Source Sans 3", system-ui, sans-serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #07173f;
+        background: linear-gradient(180deg, #a8e2ff, #5ec8ff);
+        text-decoration: none;
+        box-shadow: 0 0 0 1px rgba(168, 226, 255, 0.4), 0 4px 18px rgba(94, 200, 255, 0.35);
+      }
+      .btn:hover {
+        filter: brightness(1.06);
+      }
+      .btn:focus-visible {
+        outline: 3px solid #7fd0ff;
+        outline-offset: 3px;
+      }
+      .countdown {
+        margin: 1.25rem 0 0;
+        font-size: 0.9rem;
+        color: #8fa6d8;
+      }
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <svg class="planet" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+        <circle cx="36" cy="36" r="14" fill="#7fd0ff" opacity="0.92" />
+        <circle cx="29.5" cy="31.5" r="3.5" fill="#07173f" opacity="0.28" />
+        <ellipse
+          cx="36"
+          cy="36"
+          rx="26"
+          ry="9"
+          fill="none"
+          stroke="#dbe7ff"
+          stroke-width="2"
+          opacity="0.55"
+          transform="rotate(-18 36 36)"
+        />
+        <circle cx="58" cy="14" r="2" fill="#ffffff" opacity="0.8" />
+        <circle cx="8" cy="50" r="1.5" fill="#ffffff" opacity="0.6" />
+        <circle cx="64" cy="54" r="1.5" fill="#ffffff" opacity="0.5" />
+      </svg>
+
+      <h1 class="visually-hidden">Page not found</h1>
+      <p class="title" aria-hidden="true">404</p>
+      <p class="kicker">NASA Space Apps Challenge · Temecula</p>
+      <p class="sub">Looks like you drifted off course. The landing page is still right this way.</p>
+
+      <a class="btn" id="home-link" href="https://bl3rred.github.io/NASA-Space-Apps-Temecula-Website/">
+        Take me back to the landing page
+      </a>
+      <p class="countdown">Redirecting in <span id="count">5</span>s…</p>
+
+      <noscript>
+        <p class="sub"><a href="https://bl3rred.github.io/NASA-Space-Apps-Temecula-Website/">Go to the homepage</a></p>
+      </noscript>
+    </main>
+
+    <script>
+      // Custom 404 for GitHub Pages, where the site lives at
+      // https://bl3rred.github.io/NASA-Space-Apps-Temecula-Website/.
+      // Show a brief branded pause with a manual link, then bounce back to the
+      // site root. location.replace() keeps the Back button from looping.
+      //
+      // The repo base is hardcoded here on purpose: the build uses a relative
+      // Vite base ("./"), so a 404 page served at an arbitrary depth has no
+      // way to compute the root itself. The same repo name is already baked
+      // into index.html (canonical / og:url / og:image) and sitemap.xml.
+      (function () {
+        var repoBase = "/NASA-Space-Apps-Temecula-Website/";
+        var target =
+          location.pathname.indexOf(repoBase) === 0
+            ? location.origin + repoBase // GitHub Pages: /REPO/… → /REPO/
+            : location.origin + "/"; // Vercel and other root deploys
+
+        var link = document.getElementById("home-link");
+        link.href = target;
+        // Focus the link so keyboard/AT users can leave immediately.
+        try {
+          link.focus({ preventScroll: true });
+        } catch (err) {
+          link.focus();
+        }
+
+        var countEl = document.getElementById("count");
+        var remaining = 5;
+        var timer = setInterval(function () {
+          remaining -= 1;
+          countEl.textContent = String(remaining);
+          if (remaining <= 0) {
+            clearInterval(timer);
+            location.replace(target);
+          }
+        }, 1000);
+
+        // If the visitor clicks through, let the browser navigate and stop the countdown.
+        link.addEventListener("click", function () {
+          clearInterval(timer);
+        });
+      })();
+    </script>
+  </body>
+</html>
