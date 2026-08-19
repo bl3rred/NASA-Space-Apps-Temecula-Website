@@ -22,5 +22,6 @@ website share image.png
 top image norm.png
 top image funny.png
 
-# Optional: local source for the dandelion texture (public/ already has deploy-ready copy)
-dandelion.png
+# Optional: local source for the dandelion texture (public/ already has deploy-ready copy).
+# Anchored to the repo root — otherwise it also ignores public/assets/particles/dandelion.png.
+/dandelion.png

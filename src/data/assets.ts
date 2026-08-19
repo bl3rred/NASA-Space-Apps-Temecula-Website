@@ -1,6 +1,6 @@
 // Composite Figma slices — visual source of truth for the 1440 desktop canvas.
 // Bump SLICE_CACHE when restoring PNGs so browsers drop cached patched versions.
-const SLICE_CACHE = "v8-cockpit-goggles";
+const SLICE_CACHE = "v10-sponsors-overlap";
 
 // Vite rewrites URLs in index.html and CSS at build time, but NOT runtime
 // <img src> paths. Prefix with import.meta.env.BASE_URL so assets resolve

@@ -43,7 +43,9 @@ const ABOUT_COPY_BOTTOM = 3650;
 const GRASS_BANDS: { top: number; bottom: number; kind: ParticleKind }[] = [
   { top: 2920, bottom: 5750, kind: "leaf" },
   { top: SECTION_TOP.tracks, bottom: SECTION_TOP.schedule, kind: "dandelion" },
-  { top: SECTION_TOP.schedule, bottom: 9350, kind: "dandelion" },
+  // Schedule grass ends at ~comp 9140 where the dirt/underground transition
+  // starts — cap above it so dandelions never spawn in the dirt.
+  { top: SECTION_TOP.schedule, bottom: 9100, kind: "dandelion" },
 ];
 
 function rand(min: number, max: number): number {

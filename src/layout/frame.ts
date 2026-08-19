@@ -33,9 +33,11 @@ export const SLICES = [
     zIndex: 0,
   },
   {
+    // slice03 has one extra row prepended (copy of the tracks slice's last row)
+    // so this join gets a true 1px overlap like joins at 4007 and 12858.
     src: slices.sponsorsUnderground,
-    top: SLICE_JOINS[2] - SLICE_SEAM_OVERLAP,
-    height: 3364,
+    top: SLICE_JOINS[2] - SLICE_SEAM_OVERLAP - 1,
+    height: 3365,
     zIndex: 1,
   },
   {
