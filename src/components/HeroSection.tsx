@@ -22,20 +22,6 @@ export function HeroSection() {
       <h1 className="sr-only">NASA Space Apps Challenge — Temecula</h1>
       <PlaneWind />
       <HeroForeground />
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          left: 644,
-          top: 756,
-          width: 72,
-          height: 16,
-          borderRadius: 8,
-          background: "linear-gradient(to bottom, rgba(59, 118, 175, 0.95), rgba(44, 98, 155, 0.95))",
-          zIndex: 4,
-          pointerEvents: "none",
-        }}
-      />
       <a
         className="cta-hit"
         href={nav.register.href}

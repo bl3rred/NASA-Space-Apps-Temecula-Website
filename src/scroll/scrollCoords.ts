@@ -12,7 +12,8 @@ export function figmaScrollY(pageScrollY: number, layoutScale: number): number {
 
 export function viewportFigmaHeight(layoutScale: number): number {
   if (typeof window === "undefined") return ABOUT_NAV_BASE_VH;
-  const vh = window.visualViewport?.height ?? window.innerHeight;
+  // Use the layout viewport height so pinch zoom cannot change nav targets.
+  const vh = window.innerHeight;
   return vh / layoutScale;
 }
 

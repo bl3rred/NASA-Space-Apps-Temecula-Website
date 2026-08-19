@@ -1,5 +1,6 @@
 import type { MouseEvent } from "react";
 import { SECTION_TOP } from "../layout/frame";
+import { isMobileDevice } from "../layout/viewport";
 import { navScrollFigmaY, sectionScrollTop, type SectionId } from "./scrollCoords";
 
 function prefersReducedMotion(): boolean {
@@ -8,10 +9,10 @@ function prefersReducedMotion(): boolean {
 
 export function smoothScrollToSection(sectionId: SectionId, layoutScale: number): void {
   const targetY = sectionScrollTop(navScrollFigmaY(sectionId, layoutScale), layoutScale);
-  window.scrollTo({
-    top: targetY,
-    behavior: prefersReducedMotion() ? "auto" : "smooth",
-  });
+  // On mobile, instant scroll avoids the black-flash artifact from smooth
+  // interpolation across the navy canvas background.
+  const behavior = prefersReducedMotion() || isMobileDevice() ? "auto" : "smooth";
+  window.scrollTo({ top: targetY, behavior });
 }
 
 export function handleNavClick(

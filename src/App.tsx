@@ -1,18 +1,31 @@
+import { useLayoutEffect, useState, type CSSProperties } from "react";
 import { DesktopStickyNav, MobileNav } from "./components/Navigation";
 import { PageCanvas } from "./components/PageCanvas";
-import { FRAME_HEIGHT, FRAME_WIDTH, HERO_TOP_CROP, VISIBLE_FRAME_HEIGHT } from "./layout/frame";
-import { MOBILE_BREAKPOINT, useViewportMetrics } from "./layout/viewport";
+import { FRAME_HEIGHT, FRAME_WIDTH, VISIBLE_FRAME_HEIGHT } from "./layout/frame";
+import { isMobileDevice, MOBILE_BREAKPOINT, useViewportMetrics } from "./layout/viewport";
 import { useScrollSpy } from "./scroll/useScrollSpy";
 
 export default function App() {
   const { layoutWidth, layoutScale } = useViewportMetrics();
-  const isMobile = layoutWidth < MOBILE_BREAKPOINT;
+  const isMobile = isMobileDevice() || layoutWidth < MOBILE_BREAKPOINT;
+  const isLandscape =
+    typeof window !== "undefined" && window.matchMedia("(orientation: landscape)").matches;
+  const useMobileDropdown = isMobile && !isLandscape;
   const activeSection = useScrollSpy(layoutScale);
+  const [cssZoomSupported, setCssZoomSupported] = useState(true);
+
+  useLayoutEffect(() => {
+    setCssZoomSupported(CSS.supports("zoom", "1"));
+  }, []);
 
   return (
     <>
-      <DesktopStickyNav visible={!isMobile} activeSection={activeSection} layoutScale={layoutScale} />
-      <MobileNav visible={isMobile} activeSection={activeSection} layoutScale={layoutScale} />
+      <DesktopStickyNav
+        visible={!isMobile || isLandscape}
+        activeSection={activeSection}
+        layoutScale={layoutScale}
+      />
+      <MobileNav visible={useMobileDropdown} activeSection={activeSection} layoutScale={layoutScale} />
       <div
         className="scale-frame"
         style={{
@@ -25,19 +38,20 @@ export default function App() {
       >
         <div
           style={{
-            width: layoutWidth,
+            position: "relative",
+            width: "100%",
             height: VISIBLE_FRAME_HEIGHT * layoutScale,
             overflow: "hidden",
             flexShrink: 0,
           }}
         >
           <div
+            className={cssZoomSupported ? "canvas-layout-scale" : "canvas-transform-scale"}
             style={{
+              "--canvas-scale": layoutScale,
               width: FRAME_WIDTH,
               height: FRAME_HEIGHT,
-              transform: `scale(${layoutScale}) translateY(-${HERO_TOP_CROP}px)`,
-              transformOrigin: "top left",
-            }}
+            } as CSSProperties}
           >
             <PageCanvas />
           </div>

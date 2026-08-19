@@ -29,10 +29,10 @@ type WindSlot = {
   opacity: number;
 };
 
-const POOL_SIZE = 6;
+const POOL_SIZE = 10;
 const SPAWN_X = -40;
-const SPAWN_MIN_MS = 4000;
-const SPAWN_MAX_MS = 9000;
+const SPAWN_MIN_MS = 2500;
+const SPAWN_MAX_MS = 5500;
 const RECYCLE_MIN_MS = 0;
 const RECYCLE_MAX_MS = 3000;
 
@@ -78,7 +78,7 @@ function pickAboutSpawnY(visTop: number, visBot: number): number {
 }
 
 function pickSpawn(layoutScale: number): Omit<WindSlot, "id" | "generation"> | null {
-  const vh = (window.visualViewport?.height ?? window.innerHeight) / layoutScale;
+  const vh = window.innerHeight / layoutScale;
   const figmaTop = figmaScrollY(window.scrollY, layoutScale);
   const figmaBottom = figmaTop + vh;
 
@@ -93,7 +93,7 @@ function pickSpawn(layoutScale: number): Omit<WindSlot, "id" | "generation"> | n
 
   const band = hits[Math.floor(Math.random() * hits.length)];
   const kind = band.kind;
-  const size = kind === "dandelion" ? rand(40, 52) : rand(22, 28);
+  const size = kind === "dandelion" ? rand(58, 78) : rand(22, 28);
   const tone: "light" | "dark" = Math.random() < 0.5 ? "light" : "dark";
   const yScale = kind === "dandelion" ? 1.35 : 1.15;
   const xScale = kind === "dandelion" ? 0.7 : 1;

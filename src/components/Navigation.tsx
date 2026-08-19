@@ -38,7 +38,7 @@ type StickyNavProps = {
   layoutScale: number;
 };
 
-/** Desktop-only fixed header outside the scaled canvas. */
+/** Desktop-style fixed header outside the scaled canvas. */
 export function DesktopStickyNav({ visible, activeSection, layoutScale }: StickyNavProps) {
   if (!visible) return null;
 

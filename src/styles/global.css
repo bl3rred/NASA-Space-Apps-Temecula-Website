@@ -45,7 +45,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--space-deep);
 }
 
@@ -53,10 +53,39 @@ body {
   background: var(--space-deep);
 }
 
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
 #root {
   width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
   background: var(--space-deep);
 }
+
+/* CSS zoom participates in layout and avoids compositing the entire 14kpx
+   artwork as one transformed GPU surface. */
+.scale-frame {
+  max-width: 100%;
+  overflow-x: clip !important;
+}
+
+.canvas-layout-scale {
+  position: relative;
+  top: -150px;
+  zoom: var(--canvas-scale);
+}
+
+/* Fallback for older browsers without CSS zoom support. */
+.canvas-transform-scale {
+  transform: scale(var(--canvas-scale)) translateY(-150px);
+  transform-origin: top left;
+}
+
 
 img {
   display: block;
@@ -67,7 +96,6 @@ img {
   display: block;
   max-width: none;
   image-rendering: auto;
-  transform: translateZ(0);
 }
 
 .sr-only {
