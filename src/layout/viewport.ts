@@ -34,6 +34,8 @@ export function useViewportMetrics(): ViewportMetrics {
 
   useEffect(() => {
     let timers: ReturnType<typeof setTimeout>[] = [];
+    const orientationMediaQuery = window.matchMedia("(orientation: landscape)");
+    let knownOrientation = orientationMediaQuery.matches;
 
     const update = () => {
       setMetrics((previous) => {
@@ -43,17 +45,31 @@ export function useViewportMetrics(): ViewportMetrics {
     };
 
     const onMobileOrientationChange = () => {
+      knownOrientation = orientationMediaQuery.matches;
       timers.forEach((timer) => clearTimeout(timer));
+
+      // Apply the settled width immediately when the browser has already
+      // committed the rotation. Waiting 250ms lets the browser visibly move
+      // to the wrong scroll position before the canvas can remap it.
+      update();
       timers = [250, 650].map((delay) => setTimeout(update, delay));
     };
 
-    const orientationMediaQuery = window.matchMedia("(orientation: landscape)");
+    const onMobileResize = () => {
+      // A pinch can produce resize-like signals without changing orientation.
+      // Only treat a resize as a rotation when the media-query orientation
+      // actually changed.
+      const nextOrientation = orientationMediaQuery.matches;
+      if (nextOrientation === knownOrientation) return;
+      onMobileOrientationChange();
+    };
 
     if (isMobileDevice()) {
       // Do not subscribe to mobile resize: pinch zoom can emit resize-like
       // signals in some browsers. Only real orientation changes resize layout.
       window.addEventListener("orientationchange", onMobileOrientationChange);
       window.screen.orientation?.addEventListener("change", onMobileOrientationChange);
+      window.addEventListener("resize", onMobileResize);
       orientationMediaQuery.addEventListener("change", onMobileOrientationChange);
     } else {
       window.addEventListener("resize", update);
@@ -64,6 +80,7 @@ export function useViewportMetrics(): ViewportMetrics {
       timers.forEach((timer) => clearTimeout(timer));
       window.removeEventListener("orientationchange", onMobileOrientationChange);
       window.screen.orientation?.removeEventListener("change", onMobileOrientationChange);
+      window.removeEventListener("resize", onMobileResize);
       orientationMediaQuery.removeEventListener("change", onMobileOrientationChange);
       window.removeEventListener("resize", update);
       window.removeEventListener("orientationchange", update);
